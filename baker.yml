@@ -1,6 +1,6 @@
 ---
 name: onboard-selenium
-vagrant:
+vm:
   ip: 192.168.9.11
 lang:
   - java8
