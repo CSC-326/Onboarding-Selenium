@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,7 +25,6 @@ public class WebTest {
 
     @BeforeClass
     public static void setUp () throws Exception {
-        // driver = new HtmlUnitDriver();
         ChromeDriverManager.getInstance().setup();
         final ChromeOptions options = new ChromeOptions();
         options.addArguments( "headless" );
@@ -62,7 +62,8 @@ public class WebTest {
         final WebElement span = driver.findElement( By.xpath( xPath ) );
 
         assertNotNull( span );
-        assertThat( "We always have coffee", Integer.parseInt( span.getText() ), greaterThan( 0 ) );
+        
+        assertThat( "We always have coffee", Integer.parseInt( span.getText() ), Matchers.greaterThanOrEqualTo( 0 ) );
     }
 
     @Test
@@ -100,10 +101,10 @@ public class WebTest {
         final String currentSugar = driver.findElement( By.xpath( "//span[@id='currentSugar']" ) ).getText();
         final String currentChocolate = driver.findElement( By.xpath( "//span[@id='currentChocolate']" ) ).getText();
 
-        assertEquals( Integer.parseInt( currentCoffee ), Integer.parseInt( coffeeValue ) + 1 );
-        assertEquals( Integer.parseInt( currentMilk ), Integer.parseInt( milkValue ) + 1 );
-        assertEquals( Integer.parseInt( currentSugar ), Integer.parseInt( sugarValue ) + 1 );
-        assertEquals( Integer.parseInt( currentChocolate ), Integer.parseInt( chocolateValue ) + 1 );
+        assertEquals( Integer.parseInt( coffeeValue ) + 1, Integer.parseInt( currentCoffee ) );
+        assertEquals( Integer.parseInt( milkValue ) + 1, Integer.parseInt( currentMilk ) );
+        assertEquals( Integer.parseInt( sugarValue ) + 1, Integer.parseInt( currentSugar ) );
+        assertEquals( Integer.parseInt( chocolateValue ) + 1, Integer.parseInt( currentChocolate ) );
     }
 
 }
