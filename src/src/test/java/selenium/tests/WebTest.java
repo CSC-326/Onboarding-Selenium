@@ -1,7 +1,6 @@
 package selenium.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -25,7 +24,7 @@ public class WebTest {
 
     @BeforeClass
     public static void setUp () throws Exception {
-        ChromeDriverManager.getInstance().setup();
+        ChromeDriverManager.chromedriver().setup();
         final ChromeOptions options = new ChromeOptions();
         options.addArguments( "headless" );
         options.addArguments( "window-size=1200x600" );
@@ -62,7 +61,7 @@ public class WebTest {
         final WebElement span = driver.findElement( By.xpath( xPath ) );
 
         assertNotNull( span );
-        
+
         assertThat( "We always have coffee", Integer.parseInt( span.getText() ), Matchers.greaterThanOrEqualTo( 0 ) );
     }
 
@@ -90,10 +89,10 @@ public class WebTest {
         final WebElement button = driver.findElement( By.xpath( "//input[@value='Submit']" ) );
         button.click();
         // Give a chance for backend to process.
-        Thread.sleep(1000);
+        Thread.sleep( 1000 );
 
         // Get page again.
-        driver.navigate().refresh();            
+        driver.navigate().refresh();
         WaitForAngularToLoad();
 
         final String currentCoffee = driver.findElement( By.xpath( "//span[@id='currentCoffee']" ) ).getText();
